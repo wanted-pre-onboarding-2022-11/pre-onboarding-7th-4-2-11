@@ -1,6 +1,6 @@
 import LoginForm from "../components/LoginForm";
 import React from "react";
-import { fetchDataAPI } from "../App";
+import { tryLogin } from "../apis";
 import { useNavigate } from "react-router-dom";
 import { ILoginFormData } from "../types";
 
@@ -9,8 +9,8 @@ const LoginPage = () => {
 
   const handleLogin = async (loginFormData: ILoginFormData) => {
     try {
-      await fetchDataAPI.tryLogin(loginFormData);
-      navigate("/?current=account");
+      await tryLogin(loginFormData);
+      navigate("/?current=account&page=1");
     } catch (error) {
       alert("Check Your Email Or Password");
     }
