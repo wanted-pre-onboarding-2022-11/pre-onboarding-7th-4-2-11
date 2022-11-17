@@ -9,7 +9,7 @@ interface HeaderProps {
 
 const Header = ({ current, title }: HeaderProps) => {
   return (
-    <div className="p-5 text-2xl border-b flex justify-between sticky top-0 bg-white">
+    <div className="p-5 text-2xl border-b flex justify-between sticky top-0 bg-white z-50">
       <h1 className="">{title ? convertTitle(title) : convertTitle(current)}</h1>
       <p>{`${getUserName()} 님`}</p>
     </div>
