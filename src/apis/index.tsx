@@ -46,10 +46,6 @@ export const getAccountList = async (page: number): Promise<AccountProps> => {
     return { ...e, user_id: userName[0].name };
   });
 
-  // console.log(userList);
-  // console.log(accountList);
-  // console.log(temp);
-
   return {
     totalCount: Math.ceil(Number(resAccountList.headers["x-total-count"]) / 20),
     accountList: temp,
@@ -77,4 +73,8 @@ export const getAccountDetail = async (uuid: string): Promise<AccountList> => {
 
 export const patchAccountData = async (id: number, value: PatchAccountData) => {
   await instance.patch(`/api/accounts/${id}`, value);
+};
+
+export const deleteAccountData = async (id: string) => {
+  await instance.delete(`/api/accounts/${id}`);
 };
