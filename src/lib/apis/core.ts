@@ -1,10 +1,10 @@
 import { getAccessToken } from "@/lib/utils/localStorage";
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 
-const BASE_URL = "https://api.oscar0421.com";
+const { VITE_APP_API_END_POINT } = import.meta.env;
 
 export const instance: AxiosInstance = axios.create({
-  baseURL: BASE_URL,
+  baseURL: VITE_APP_API_END_POINT,
   timeout: 2000,
 });
 

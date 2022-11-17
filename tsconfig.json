@@ -21,5 +21,6 @@
     }
   },
   "include": ["src", ".eslintrc", "vite.config.ts", "tailwind.config.cjs", "postcss.config.cjs"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "lib": ["WebWorker"]
 }
