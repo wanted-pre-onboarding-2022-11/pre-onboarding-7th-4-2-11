@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
+import { Navigate, useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { getAccountList } from "../apis";
 import { AccountProps } from "../types";
@@ -12,6 +12,7 @@ const MainPage = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const page: number | null = Number(searchParams.get("page"));
+  const location = useLocation();
 
   const handleGetAccountList = async () => {
     try {
@@ -34,14 +35,18 @@ const MainPage = () => {
     navigate(`?current=account&page=${selectedItem.selected + 1}`);
   };
 
-  const handleDetail = (uuid: string): void => {
-    navigate(`/detail?target=${uuid}`, { state: { page } });
+  const handleDetail = (id: number): void => {
+    navigate(`/detail?target=${id}`, { state: page });
   };
 
-  const { data, isLoading, isError } = useQuery<AccountProps>(
+  const { data, isLoading, isError, refetch } = useQuery<AccountProps>(
     ["accountList", page],
     handleGetAccountList,
   );
+
+  useEffect(() => {
+    if (location.state === "delete") refetch();
+  }, [location]);
 
   useEffect(() => {
     if (page <= 0) navigate(`?current=account&page=1`);
