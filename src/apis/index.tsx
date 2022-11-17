@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import { saveFetchData, getAccessToken } from "../utils/localStorage";
-import { ILoginFormData, AccountProps } from "../types";
+import { ILoginFormData, AccountProps, AccountList, UserList, PatchAccountData } from "../types";
 
 export const instance: AxiosInstance = axios.create({ timeout: 2000 });
 
@@ -30,23 +30,51 @@ export const tryLogin = async (loginFormData: ILoginFormData): Promise<void> => 
 };
 
 export const getAccountList = async (page: number): Promise<AccountProps> => {
-  // const resUsers = await instance.get("/api/users");
-  // console.log(resUsers.data);
-
-  const res = await instance.get(`/api/accounts?`, {
+  const resUserList = await instance.get("/api/users");
+  const resAccountList = await instance.get(`/api/accounts?`, {
     params: {
       _page: page,
       _limit: 20,
     },
   });
 
+  const userList = resUserList.data;
+  const accountList = resAccountList.data;
+
+  const temp = accountList.map((e: AccountList) => {
+    const userName = userList.filter((el: UserList) => el.id === e.user_id);
+    return { ...e, user_id: userName[0].name };
+  });
+
+  // console.log(userList);
+  // console.log(accountList);
+  // console.log(temp);
+
   return {
-    totalCount: Math.ceil(Number(res.headers["x-total-count"]) / 20),
-    accountList: res.data,
+    totalCount: Math.ceil(Number(resAccountList.headers["x-total-count"]) / 20),
+    accountList: temp,
   };
 };
 
-export const getUserList = async () => {
-  const res = await instance.get("/api/users");
-  return res.data;
+export const getAccountDetail = async (uuid: string): Promise<AccountList> => {
+  const resUserList = await instance.get("/api/users");
+  const resAccountDetail = await instance.get(`/api/accounts`, {
+    params: {
+      q: uuid,
+    },
+  });
+
+  const userList = resUserList.data;
+  const accountList = resAccountDetail.data;
+
+  const temp = accountList.map((e: AccountList) => {
+    const userName = userList.filter((el: UserList) => el.id === e.user_id);
+    return { ...e, user_id: userName[0].name };
+  });
+
+  return temp[0];
+};
+
+export const patchAccountData = async (id: number, value: PatchAccountData) => {
+  await instance.patch(`/api/accounts/${id}`, value);
 };
