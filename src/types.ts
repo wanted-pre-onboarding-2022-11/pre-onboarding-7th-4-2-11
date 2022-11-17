@@ -27,7 +27,7 @@ export interface AccountProps {
   accountList: AccountList[];
 }
 
-export interface UserList {
+export interface IUser {
   address: string;
   age: number;
   birth_date: string;
@@ -57,4 +57,15 @@ export interface PatchAccountData {
   updated_at?: string;
   user_id?: number;
   uuid?: string;
+}
+
+export interface ISettings {
+  allow_invest_push: boolean;
+  allow_marketing_push: boolean;
+  created_at: string;
+  id: number;
+  is_active: boolean;
+  is_staff: boolean;
+  updated_at: string;
+  uuid: string;
 }

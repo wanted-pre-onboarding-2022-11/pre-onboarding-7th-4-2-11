@@ -6,6 +6,8 @@ import LoginPage from "../pages/LoginPage";
 import DetailPage from "../pages/DetailPage";
 import ProtectedRoute from "./AuthorizationRouter";
 import Layout from "../components/Layout/Layout";
+import UserPage from "../pages/UserPage";
+import UserInfoPage from "../pages/UserInfoPage";
 
 const AppRouter = () => {
   return (
@@ -33,6 +35,22 @@ const AppRouter = () => {
             element={
               <ProtectedRoute isTokenRequired={false} redirectPath={ROUTE_PATH.LOGIN}>
                 <DetailPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={`${ROUTE_PATH.USER}`}
+            element={
+              <ProtectedRoute isTokenRequired={false} redirectPath={ROUTE_PATH.LOGIN}>
+                <UserPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={`${ROUTE_PATH.USER}/:id`}
+            element={
+              <ProtectedRoute isTokenRequired={false} redirectPath={ROUTE_PATH.LOGIN}>
+                <UserInfoPage />
               </ProtectedRoute>
             }
           />

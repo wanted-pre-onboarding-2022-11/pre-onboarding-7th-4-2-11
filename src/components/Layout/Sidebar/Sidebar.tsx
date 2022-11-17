@@ -1,6 +1,7 @@
 import React from "react";
 import SidebarMenu from "./SidebarMenu";
 import { useLocation } from "react-router-dom";
+import ROUTE_PATH from "../../../routes/routerPaths";
 
 interface SidebarProps {
   current: string | null;
@@ -25,6 +26,11 @@ const Sidebar = ({ current, navigateTo, handleLogout }: SidebarProps) => {
         name="계좌목록"
         isSelected={current === "account"}
         callback={() => navigateTo(`/?current=account&page=${page}`)}
+      />
+      <SidebarMenu
+        name="사용자"
+        isSelected={current === "user"}
+        callback={() => navigateTo(`${ROUTE_PATH.USER}?current=user`)}
       />
       <SidebarMenu name="로그아웃" isSelected={current === "logout"} callback={handleLogout} />
     </div>

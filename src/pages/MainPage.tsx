@@ -69,9 +69,9 @@ const MainPage = () => {
 
   return (
     <div className="min-h-screen p-5">
+      <input onChange={handleSearchValue} value={searchQuery} />
+      <button onClick={handleSearchSubmit}>검색</button>
       <ContentContainer className="shadow-lg min-h-screen p-5 w-full ">
-        <input onChange={handleSearchValue} value={searchQuery} />
-        <button onClick={handleSearchSubmit}>검색</button>
         {data && !isLoading ? (
           <>
             <Table accountList={data.accountList} handleDetail={handleDetail} />
