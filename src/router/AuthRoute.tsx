@@ -2,7 +2,7 @@ import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { getAccessToken } from "@/lib/utils/localStorage";
 
-const ProtectedRoute = ({
+const AuthRoute = ({
   children,
   isTokenRequired = true,
   redirectPath,
@@ -19,4 +19,4 @@ const ProtectedRoute = ({
   return children;
 };
 
-export default ProtectedRoute;
+export default AuthRoute;

@@ -8,7 +8,7 @@ import { AccountTable, AccountTablePagination } from "@/components/domain/Accoun
 import { Loading } from "@/components/atom";
 import { getAccountList } from "@/lib/apis/account";
 
-const MainPage = () => {
+const AccountPage = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const page: number | null = Number(searchParams.get("page"));
@@ -97,4 +97,4 @@ const ContentContainer = styled.div`
   }
 `;
 
-export default MainPage;
+export default AccountPage;

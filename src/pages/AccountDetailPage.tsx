@@ -6,7 +6,7 @@ import AccountDetailTable from "@/components/domain/AccountDetailTable";
 import { IAccount } from "@/lib/models";
 import { deleteAccountData, getAccountDetail, patchAccountData } from "@/lib/apis/account";
 
-const DetailPage = () => {
+const AccountDetailPage = () => {
   const [searchParams] = useSearchParams();
   const target: string | null = searchParams.get("target");
   const navigate = useNavigate();
@@ -61,4 +61,4 @@ const Loading = styled.div`
   justify-content: center;
 `;
 
-export default DetailPage;
+export default AccountDetailPage;

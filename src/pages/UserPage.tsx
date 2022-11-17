@@ -86,7 +86,7 @@ const UserPage = () => {
       <section className="flex h-[40px] items-center justify-between">
         <button onClick={() => setVisibleModal(true)}>사용자 생성</button>
         <Modal visible={visibleModal} onClose={() => setVisibleModal(false)}>
-          <h1>테스트</h1>
+          <h1>개발 중인 기능이에요 🥲</h1>
         </Modal>
         <form onSubmit={handleSearch} className="flex h-full items-center gap-5">
           <input

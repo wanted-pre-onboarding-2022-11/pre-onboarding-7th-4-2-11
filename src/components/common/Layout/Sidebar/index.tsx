@@ -1,7 +1,7 @@
 import React from "react";
 import Menu from "./Menu";
 import { useLocation } from "react-router-dom";
-import ROUTE_PATH from "@/routes/paths";
+import ROUTE_PATH from "@/router/paths";
 
 interface SidebarProps {
   current: string | null;

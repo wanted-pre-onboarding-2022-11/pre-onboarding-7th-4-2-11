@@ -1,13 +1,9 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import MainPage from "../pages/MainPage";
-import LoginPage from "../pages/LoginPage";
-import DetailPage from "../pages/DetailPage";
-import ProtectedRoute from "./AuthorizationRouter";
-import UserPage from "../pages/UserPage";
-import UserInfoPage from "../pages/UserInfoPage";
 import { Layout } from "@/components/common";
 import ROUTE_PATH from "./paths";
+import { AccountDetailPage, AccountPage, LoginPage, UserDetailPage, UserPage } from "@/pages";
+import AuthRoute from "./AuthRoute";
 
 const AppRouter = () => {
   return (
@@ -16,42 +12,42 @@ const AppRouter = () => {
         <Route
           path={ROUTE_PATH.LOGIN}
           element={
-            <ProtectedRoute isTokenRequired redirectPath={ROUTE_PATH.BASE}>
+            <AuthRoute isTokenRequired redirectPath={ROUTE_PATH.BASE}>
               <LoginPage />
-            </ProtectedRoute>
+            </AuthRoute>
           }
         />
         <Route element={<Layout />}>
           <Route
             path={ROUTE_PATH.BASE}
             element={
-              <ProtectedRoute isTokenRequired={false} redirectPath={ROUTE_PATH.LOGIN}>
-                <MainPage />
-              </ProtectedRoute>
+              <AuthRoute isTokenRequired={false} redirectPath={ROUTE_PATH.LOGIN}>
+                <AccountPage />
+              </AuthRoute>
             }
           />
           <Route
             path={`${ROUTE_PATH.DETAIL}`}
             element={
-              <ProtectedRoute isTokenRequired={false} redirectPath={ROUTE_PATH.LOGIN}>
-                <DetailPage />
-              </ProtectedRoute>
+              <AuthRoute isTokenRequired={false} redirectPath={ROUTE_PATH.LOGIN}>
+                <AccountDetailPage />
+              </AuthRoute>
             }
           />
           <Route
             path={`${ROUTE_PATH.USER}`}
             element={
-              <ProtectedRoute isTokenRequired={false} redirectPath={ROUTE_PATH.LOGIN}>
+              <AuthRoute isTokenRequired={false} redirectPath={ROUTE_PATH.LOGIN}>
                 <UserPage />
-              </ProtectedRoute>
+              </AuthRoute>
             }
           />
           <Route
             path={`${ROUTE_PATH.USER}/:id`}
             element={
-              <ProtectedRoute isTokenRequired={false} redirectPath={ROUTE_PATH.LOGIN}>
-                <UserInfoPage />
-              </ProtectedRoute>
+              <AuthRoute isTokenRequired={false} redirectPath={ROUTE_PATH.LOGIN}>
+                <UserDetailPage />
+              </AuthRoute>
             }
           />
         </Route>

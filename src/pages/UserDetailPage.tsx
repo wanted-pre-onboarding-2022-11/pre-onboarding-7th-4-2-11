@@ -7,7 +7,7 @@ import { getUserInfo } from "@/lib/apis/user";
 import { ACCOUNT_TABLE_HEADER, convertDate, convertMonetaryUnit } from "@/lib/utils";
 import { ACCOUNT_STATUS, BROKERS } from "@/lib/data";
 
-const UserInfoPage = () => {
+const UserDetailPage = () => {
   const { state } = useLocation();
 
   const { data: accountData } = useQuery(["accounts"], () => getAccountAll(), {
@@ -141,4 +141,4 @@ const UserInfoPage = () => {
   );
 };
 
-export default UserInfoPage;
+export default UserDetailPage;
