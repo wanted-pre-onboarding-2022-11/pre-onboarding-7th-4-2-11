@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 interface TableProps {
   accountList: AccountList[];
-  handleDetail(uuid: string): void;
+  handleDetail(id: number): void;
 }
 
 const Table = ({ accountList, handleDetail }: TableProps) => {
@@ -30,7 +30,7 @@ const Table = ({ accountList, handleDetail }: TableProps) => {
             <tr key={e.uuid}>
               <td>{convertDataFunction.convertAccountUserName(String(e.user_id))}</td>
               <td>{convertDataFunction.convertAccountBroker(e.broker_id)}</td>
-              <td onClick={() => handleDetail(e.uuid)}>
+              <td onClick={() => handleDetail(e.id)}>
                 {convertDataFunction.convertAccountNumber(e.number)}
               </td>
               <td>{convertDataFunction.convertAccountStatus(e.status)}</td>
