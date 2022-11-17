@@ -11,7 +11,6 @@ const DetailPage = () => {
   const target: string | null = searchParams.get("target");
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location);
 
   if (target === null) return <div>Error</div>;
 
