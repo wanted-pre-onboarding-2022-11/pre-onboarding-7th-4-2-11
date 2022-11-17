@@ -2,7 +2,6 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getAccountAll, getSettingAll, getUserInfo } from "../apis";
-import { AccountList, ISettings } from "../types";
 import {
   AccountStatus,
   ACCOUNT_STATUS,
@@ -12,6 +11,7 @@ import {
   convertDate,
   convertMonetaryUnit,
 } from "../utils/user";
+import { IAccount, ISettings } from "@/lib/models";
 
 const UserInfoPage = () => {
   const { state } = useLocation();
@@ -63,7 +63,7 @@ const UserInfoPage = () => {
             <div className="grid grid-cols-[120px_auto]">
               <span className="table-header">보유 계좌 수</span>
               <span className="table-body">
-                {accountData?.filter((value: AccountList) => value.user_id === data.id).length}
+                {accountData?.filter((value: IAccount) => value.user_id === data.id).length}
               </span>
             </div>
 
@@ -124,8 +124,8 @@ const UserInfoPage = () => {
 
               <tbody>
                 {accountData
-                  ?.filter((value: AccountList) => value.user_id === data.id)
-                  .map((item: AccountList) => (
+                  ?.filter((value: IAccount) => value.user_id === data.id)
+                  .map((item: IAccount) => (
                     <tr key={item.uuid}>
                       <td className="table-body">{data.name}</td>
                       <td className="table-body">{BROKERS[item.broker_id as BrokerId]}</td>

@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getAccountAll, getSettingAll, getUserList } from "../apis";
-import { AccountList, ISettings, IUser } from "../types";
 import { convertDate, USER_TABLE_HEADER } from "../utils/user";
+import { IAccount, ISettings, IUser } from "@/lib/models";
+import { Modal } from "@/components/common";
 
 const UserPage = () => {
   const navigate = useNavigate();
-
+  const [visibleModal, setVisibleModal] = useState(false);
   const [page, setPage] = useState(1);
   const [isSearch, setIsSearch] = useState(false);
   const [query, setQuery] = useState("");
@@ -75,6 +76,10 @@ const UserPage = () => {
       {status === "error" && <span>Error!</span>}
 
       <section className="flex h-[40px] items-center justify-between">
+        <button onClick={() => setVisibleModal(true)}>사용자 생성</button>
+        <Modal visible={visibleModal} onClose={() => setVisibleModal(false)}>
+          <h1>테스트</h1>
+        </Modal>
         <form onSubmit={handleSearch} className="flex h-full items-center gap-5">
           <input
             className="h-full w-80 rounded-xl border border-stone-300 px-2"
@@ -126,7 +131,7 @@ const UserPage = () => {
                     {item.name}
                   </td>
                   <td className="table-body">
-                    {accountData?.filter((value: AccountList) => value.user_id === item.id).length}
+                    {accountData?.filter((value: IAccount) => value.user_id === item.id).length}
                   </td>
                   <td className="table-body">{item.email}</td>
                   <td className="table-body">

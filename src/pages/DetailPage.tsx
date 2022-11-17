@@ -2,9 +2,9 @@ import React from "react";
 import { Navigate, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getAccountDetail, patchAccountData, deleteAccountData } from "../apis";
-import { AccountList, PatchAccountData } from "../types";
 import styled from "styled-components";
-import DetailTable from "../components/Detail/DetailTable";
+import AccountDetailTable from "@/components/domain/AccountDetailTable";
+import { IAccount } from "@/lib/models";
 
 const DetailPage = () => {
   const [searchParams] = useSearchParams();
@@ -14,12 +14,11 @@ const DetailPage = () => {
 
   if (target === null) return <div>Error</div>;
 
-  const { data, isLoading, isError, refetch } = useQuery<AccountList>(
-    ["accountDetail", target],
-    () => getAccountDetail(target),
+  const { data, isLoading, isError, refetch } = useQuery<IAccount>(["accountDetail", target], () =>
+    getAccountDetail(target),
   );
 
-  const handleDataChange = (id: number, value: PatchAccountData): void => {
+  const handleDataChange = (id: number, value: Partial<IAccount>): void => {
     patchAccountData(id, { ...value, updated_at: new Date().toString() });
     refetch();
   };
@@ -44,7 +43,7 @@ const DetailPage = () => {
           </button>
         </div>
         {data && !isLoading ? (
-          <DetailTable data={data} handleDataChange={handleDataChange} />
+          <AccountDetailTable data={data} handleDataChange={handleDataChange} />
         ) : (
           <Loading>불러오는 중</Loading>
         )}

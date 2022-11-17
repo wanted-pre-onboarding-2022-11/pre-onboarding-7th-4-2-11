@@ -3,10 +3,10 @@ import { useQuery } from "@tanstack/react-query";
 import { Navigate, useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { getAccountList } from "../apis";
-import { AccountProps } from "../types";
 import { deleteFetchData } from "../utils/localStorage";
-import Table from "../components/Table/Table";
-import TablePagination from "../components/Table/TablePagination";
+import { AccountPaginationProps } from "@/lib/types";
+import { AccountTable, AccountTablePagination } from "@/components/domain/Account";
+import { Loading } from "@/components/atom";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ const MainPage = () => {
     navigate(`/detail?target=${id}`, { state: page });
   };
 
-  const { data, isLoading, isError, refetch } = useQuery<AccountProps>(
+  const { data, isLoading, isError, refetch } = useQuery<AccountPaginationProps>(
     ["accountList", { page, search }],
     handleGetAccountList,
   );
@@ -74,8 +74,8 @@ const MainPage = () => {
       <ContentContainer className="shadow-lg min-h-screen p-5 w-full ">
         {data && !isLoading ? (
           <>
-            <Table accountList={data.accountList} handleDetail={handleDetail} />
-            <TablePagination
+            <AccountTable accountList={data.accountList} handleDetail={handleDetail} />
+            <AccountTablePagination
               totalCount={Number(data.totalCount)}
               page={page}
               handlePageClick={handlePageClick}
@@ -95,15 +95,6 @@ const ContentContainer = styled.div`
     overflow-x: scroll;
     white-space: nowrap;
   }
-`;
-
-const Loading = styled.div`
-  font-size: 36px;
-  width: 100%;
-  height: 500px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 export default MainPage;

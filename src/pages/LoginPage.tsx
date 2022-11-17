@@ -1,13 +1,12 @@
-import LoginForm from "../components/LoginForm";
+import { LoginForm } from "@/components/domain/Auth";
 import React from "react";
 import { tryLogin } from "../apis";
 import { useNavigate } from "react-router-dom";
-import { ILoginFormData } from "../types";
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
-  const handleLogin = async (loginFormData: ILoginFormData) => {
+  const handleLogin = async (loginFormData: { email: string; password: string }) => {
     try {
       await tryLogin(loginFormData);
       navigate("/?current=account&page=1");

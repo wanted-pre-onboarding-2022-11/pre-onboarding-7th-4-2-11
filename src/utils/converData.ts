@@ -1,9 +1,8 @@
-import accountStatus from "./accountStatus.json";
-import brokers from "./brokers.json";
+import { accountStatusData, BROKERS } from "@/lib/data";
 
 export const convertDataFunction = {
   convertAccountStatus: (status: number): string => {
-    const result = Object.entries(accountStatus).filter((e) => e[1] === status);
+    const result = Object.entries(accountStatusData).filter((e) => e[1] === status);
     if (result.length === 0) return "ERROR STATUS";
     return result[0][0];
   },
@@ -12,7 +11,7 @@ export const convertDataFunction = {
     return newDate.toLocaleString();
   },
   convertAccountBroker: (broker: string): string => {
-    const brokersName: { [index: string]: string } = brokers;
+    const brokersName: { [index: string]: string } = BROKERS;
     return brokersName[broker];
   },
   convertAccountNumber: (number: string): string => {

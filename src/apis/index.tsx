@@ -1,18 +1,7 @@
+import { IAccount, ISettings, IUser } from "@/lib/models";
+import { AccountPaginationProps, UserPaginationProps } from "@/lib/types";
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import { saveFetchData, getAccessToken } from "../utils/localStorage";
-import {
-  ILoginFormData,
-  AccountProps,
-  AccountList,
-  IUser,
-  PatchAccountData,
-  ISettings,
-} from "../types";
-
-type IArgument = {
-  page: number;
-  query: string;
-};
 
 const BASE_URL = "https://api.oscar0421.com";
 
@@ -41,12 +30,15 @@ instance.interceptors.response.use(
   },
 );
 
-export const tryLogin = async (loginFormData: ILoginFormData): Promise<void> => {
+export const tryLogin = async (loginFormData: { email: string; password: string }) => {
   const res = await instance.post("/login", loginFormData);
   saveFetchData(res.data.accessToken, res.data.user);
 };
 
-export const getAccountList = async (page: number, search: string): Promise<AccountProps> => {
+export const getAccountList = async (
+  page: number,
+  search: string,
+): Promise<AccountPaginationProps> => {
   const resUserList = await instance.get("/users");
   const resAccountList = await instance.get(`/accounts?`, {
     params: {
@@ -59,8 +51,8 @@ export const getAccountList = async (page: number, search: string): Promise<Acco
   const userList = resUserList.data;
   const accountList = resAccountList.data;
 
-  const temp = accountList.map((e: AccountList) => {
-    const userName = userList.filter((el: IUser) => el.id === e.user_id);
+  const temp = accountList.map((e: IAccount) => {
+    const userName = userList.filter((user: IUser) => user.id === e.user_id);
     return { ...e, user_id: userName[0].name };
   });
 
@@ -70,22 +62,20 @@ export const getAccountList = async (page: number, search: string): Promise<Acco
   };
 };
 
-export const getAccountDetail = async (id: string): Promise<AccountList> => {
+export const getAccountDetail = async (id: string): Promise<IAccount> => {
   const resUserList = await instance.get("/users");
   const resAccountDetail = await instance.get(`/accounts/${id}`);
-
   const userList = resUserList.data;
   const accountList = [resAccountDetail.data];
-
-  const temp = accountList.map((e: AccountList) => {
-    const userName = userList.filter((el: IUser) => el.id === e.user_id);
+  const temp = accountList.map((e: IAccount) => {
+    const userName = userList.filter((user: IUser) => user.id === e.user_id);
     return { ...e, user_id: userName[0].name };
   });
 
   return temp[0];
 };
 
-export const patchAccountData = async (id: number, value: PatchAccountData) => {
+export const patchAccountData = async (id: number, value: Partial<IAccount>) => {
   await instance.patch(`/accounts/${id}`, value);
 };
 
@@ -98,12 +88,12 @@ export const getSettingAll = async (): Promise<ISettings[]> => {
   return res.data;
 };
 
-export const getAccountAll = async (): Promise<AccountList[]> => {
+export const getAccountAll = async (): Promise<IAccount[]> => {
   const res = await instance.get("/accounts");
   return res.data;
 };
 
-export const getUserList = async ({ page, query }: IArgument): Promise<IUser[]> => {
+export const getUserList = async ({ page, query }: UserPaginationProps): Promise<IUser[]> => {
   const res = await instance.get("/users", { params: { _page: page, _limit: 20, q: query } });
   return res.data;
 };

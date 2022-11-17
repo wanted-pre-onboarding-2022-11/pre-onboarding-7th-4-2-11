@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ROUTE_PATH from "./routerPaths";
 import MainPage from "../pages/MainPage";
 import LoginPage from "../pages/LoginPage";
 import DetailPage from "../pages/DetailPage";
 import ProtectedRoute from "./AuthorizationRouter";
-import Layout from "../components/Layout/Layout";
 import UserPage from "../pages/UserPage";
 import UserInfoPage from "../pages/UserInfoPage";
+import { Layout } from "@/components/common";
+import ROUTE_PATH from "./paths";
 
 const AppRouter = () => {
   return (
