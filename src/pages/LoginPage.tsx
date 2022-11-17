@@ -1,6 +1,6 @@
+import { tryLogin } from "@/lib/apis/auth";
 import { LoginForm } from "@/components/domain/Auth";
 import React from "react";
-import { tryLogin } from "../apis";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {

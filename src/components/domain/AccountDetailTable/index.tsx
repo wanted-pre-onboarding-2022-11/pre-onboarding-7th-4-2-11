@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { IAccount } from "@/lib/models";
-import { convertDataFunction } from "@/utils/converData";
+import * as accountUtils from "@/lib/utils/account";
 import TableItem from "./TableItem";
 import InputText from "./InputText";
 import SelectBroker from "./SelectBroker";
@@ -35,7 +35,7 @@ const DetailTable = ({ data, handleDataChange }: DetailTable) => {
         />
         <TableItem
           title="증권사"
-          value={convertDataFunction.convertAccountBroker(data.broker_id)}
+          value={accountUtils.convertAccountBroker(data.broker_id)}
           id={data.id}
           target={"broker_id"}
           handleDataChange={handleDataChange}
@@ -50,7 +50,7 @@ const DetailTable = ({ data, handleDataChange }: DetailTable) => {
         />
         <TableItem
           title="계좌상태"
-          value={convertDataFunction.convertAccountStatus(data.status)}
+          value={accountUtils.convertAccountStatus(data.status)}
           id={data.id}
           target={"status"}
           handleDataChange={handleDataChange}
@@ -66,7 +66,7 @@ const DetailTable = ({ data, handleDataChange }: DetailTable) => {
         />
         <TableItem
           title="평가금액"
-          value={`${convertDataFunction.convertAccountAssets(data.assets)} 원`}
+          value={`${accountUtils.convertAccountAssets(data.assets)} 원`}
           id={data.id}
           target={"assets"}
           handleDataChange={handleDataChange}
@@ -74,7 +74,7 @@ const DetailTable = ({ data, handleDataChange }: DetailTable) => {
         />
         <TableItem
           title="입금금액"
-          value={`${convertDataFunction.convertAccountAssets(data.payments)} 원`}
+          value={`${accountUtils.convertAccountAssets(data.payments)} 원`}
           id={data.id}
           target={"payments"}
           handleDataChange={handleDataChange}
@@ -82,14 +82,14 @@ const DetailTable = ({ data, handleDataChange }: DetailTable) => {
         />
         <TableItem
           title="계좌개설일"
-          value={convertDataFunction.convertCreatedDate(data.created_at)}
+          value={accountUtils.convertCreatedDate(data.created_at)}
           id={data.id}
           target={"created_at"}
           handleDataChange={handleDataChange}
         />
         <TableItem
           title="최근활동일"
-          value={convertDataFunction.convertCreatedDate(data.updated_at)}
+          value={accountUtils.convertCreatedDate(data.updated_at)}
           id={data.id}
           target={"updated_at"}
           handleDataChange={handleDataChange}

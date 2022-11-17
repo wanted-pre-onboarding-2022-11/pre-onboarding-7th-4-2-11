@@ -1,10 +1,10 @@
 import React from "react";
 import { Navigate, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getAccountDetail, patchAccountData, deleteAccountData } from "../apis";
 import styled from "styled-components";
 import AccountDetailTable from "@/components/domain/AccountDetailTable";
 import { IAccount } from "@/lib/models";
+import { deleteAccountData, getAccountDetail, patchAccountData } from "@/lib/apis/account";
 
 const DetailPage = () => {
   const [searchParams] = useSearchParams();

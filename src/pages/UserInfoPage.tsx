@@ -1,17 +1,11 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getAccountAll, getSettingAll, getUserInfo } from "../apis";
-import {
-  AccountStatus,
-  ACCOUNT_STATUS,
-  ACCOUNT_TABLE_HEADER,
-  BrokerId,
-  BROKERS,
-  convertDate,
-  convertMonetaryUnit,
-} from "../utils/user";
 import { IAccount, ISettings } from "@/lib/models";
+import { getAccountAll, getSettingAll } from "@/lib/apis/account";
+import { getUserInfo } from "@/lib/apis/user";
+import { ACCOUNT_TABLE_HEADER, convertDate, convertMonetaryUnit } from "@/lib/utils";
+import { ACCOUNT_STATUS, BROKERS } from "@/lib/data";
 
 const UserInfoPage = () => {
   const { state } = useLocation();
@@ -128,9 +122,9 @@ const UserInfoPage = () => {
                   .map((item: IAccount) => (
                     <tr key={item.uuid}>
                       <td className="table-body">{data.name}</td>
-                      <td className="table-body">{BROKERS[item.broker_id as BrokerId]}</td>
+                      <td className="table-body">{BROKERS[item.broker_id]}</td>
                       <td className="table-body">{item.number}</td>
-                      <td className="table-body">{ACCOUNT_STATUS[item.status as AccountStatus]}</td>
+                      <td className="table-body">{ACCOUNT_STATUS[item.status]}</td>
                       <td className="table-body">{item.name}</td>
                       <td className="table-body text-end">{convertMonetaryUnit(item.assets)}</td>
                       <td className="table-body text-end">{convertMonetaryUnit(item.payments)}</td>

@@ -1,39 +1,6 @@
 import { IAccount, ISettings, IUser } from "@/lib/models";
-import { AccountPaginationProps, UserPaginationProps } from "@/lib/types";
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
-import { saveFetchData, getAccessToken } from "../utils/localStorage";
-
-const BASE_URL = "https://api.oscar0421.com";
-
-export const instance: AxiosInstance = axios.create({
-  baseURL: BASE_URL,
-  timeout: 2000,
-});
-
-instance.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
-    return { ...config, headers: { Authorization: `Bearer ${getAccessToken()}` } };
-  },
-  (error: AxiosError) => error.message,
-);
-
-instance.interceptors.response.use(
-  (response) => response,
-  (error: AxiosError) => {
-    const { response } = error as unknown as AxiosError;
-
-    if (response) {
-      throw { data: response.data, status: response.status, statusText: response.statusText };
-    }
-
-    throw error;
-  },
-);
-
-export const tryLogin = async (loginFormData: { email: string; password: string }) => {
-  const res = await instance.post("/login", loginFormData);
-  saveFetchData(res.data.accessToken, res.data.user);
-};
+import { AccountPaginationProps } from "@/lib/types";
+import { instance } from "./core";
 
 export const getAccountList = async (
   page: number,
@@ -90,15 +57,5 @@ export const getSettingAll = async (): Promise<ISettings[]> => {
 
 export const getAccountAll = async (): Promise<IAccount[]> => {
   const res = await instance.get("/accounts");
-  return res.data;
-};
-
-export const getUserList = async ({ page, query }: UserPaginationProps): Promise<IUser[]> => {
-  const res = await instance.get("/users", { params: { _page: page, _limit: 20, q: query } });
-  return res.data;
-};
-
-export const getUserInfo = async (userId: number): Promise<IUser[]> => {
-  const res = await instance.get("/users", { params: { id: userId } });
   return res.data;
 };

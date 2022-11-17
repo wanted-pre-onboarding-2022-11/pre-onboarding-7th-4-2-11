@@ -1,9 +1,9 @@
 import React from "react";
 import { Button, Form, TextField } from "@/components/atom";
-import useInputValidation from "@/hooks/useInputValidation";
+import useInputValidation from "@/lib/hooks/useInputValidation";
 import { FormEvent } from "react";
 import styled from "styled-components";
-import validate from "@/hooks/useInputValidation/validate";
+import validate from "@/lib/hooks/useInputValidation/validate";
 
 const RegisterForm = () => {
   const { values, results, isAllPass, eventHandler } = useInputValidation({

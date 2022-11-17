@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Navigate, useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { getAccountList } from "../apis";
-import { deleteFetchData } from "../utils/localStorage";
+import { deleteFetchData } from "@/lib/utils/localStorage";
 import { AccountPaginationProps } from "@/lib/types";
 import { AccountTable, AccountTablePagination } from "@/components/domain/Account";
 import { Loading } from "@/components/atom";
+import { getAccountList } from "@/lib/apis/account";
 
 const MainPage = () => {
   const navigate = useNavigate();

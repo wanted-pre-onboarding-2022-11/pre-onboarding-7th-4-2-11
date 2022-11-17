@@ -1,7 +1,7 @@
 import React from "react";
-import { convertDataFunction } from "@/utils/converData";
-import { IAccount } from "@/lib/models";
 import styled from "styled-components";
+import { IAccount } from "@/lib/models";
+import * as accountUtils from "@/lib/utils/account";
 
 interface AccountTableProps {
   accountList: IAccount[];
@@ -28,17 +28,17 @@ const AccountTable = ({ accountList, handleDetail }: AccountTableProps) => {
         <tbody>
           {accountList.map((e) => (
             <tr key={e.uuid}>
-              <td>{convertDataFunction.convertAccountUserName(String(e.user_id))}</td>
-              <td>{convertDataFunction.convertAccountBroker(e.broker_id)}</td>
+              <td>{accountUtils.convertAccountUserName(String(e.user_id))}</td>
+              <td>{accountUtils.convertAccountBroker(e.broker_id)}</td>
               <td onClick={() => handleDetail(e.id)}>
-                {convertDataFunction.convertAccountNumber(e.number)}
+                {accountUtils.convertAccountNumber(e.number)}
               </td>
-              <td>{convertDataFunction.convertAccountStatus(e.status)}</td>
+              <td>{accountUtils.convertAccountStatus(e.status)}</td>
               <td>{e.name}</td>
-              <td>{convertDataFunction.convertAccountAssets(e.assets)} 원</td>
-              <td>{convertDataFunction.convertAccountAssets(e.payments)} 원</td>
+              <td>{accountUtils.convertAccountAssets(e.assets)} 원</td>
+              <td>{accountUtils.convertAccountAssets(e.payments)} 원</td>
               <td>{e.is_active ? "활성" : "비활성"}</td>
-              <td>{convertDataFunction.convertCreatedDate(e.created_at)}</td>
+              <td>{accountUtils.convertCreatedDate(e.created_at)}</td>
             </tr>
           ))}
         </tbody>

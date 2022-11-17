@@ -1,6 +1,6 @@
+import { convertTitle } from "@/lib/utils/account";
+import { getUserName } from "@/lib/utils/localStorage";
 import React from "react";
-import { getUserName } from "@/utils/localStorage";
-import { convertTitle } from "@/utils/converData";
 
 interface HeaderProps {
   current: string | null;

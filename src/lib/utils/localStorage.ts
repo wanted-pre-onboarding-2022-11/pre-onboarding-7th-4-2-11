@@ -1,5 +1,5 @@
-export const ACCESS_TOKEN_KEY = "accessToken";
-export const USER_DATA = "userData";
+export const ACCESS_TOKEN_KEY = "accessToken" as const;
+export const USER_DATA = "userData" as const;
 
 export const saveFetchData = (
   accessToken: string,

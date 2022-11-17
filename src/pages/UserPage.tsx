@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getAccountAll, getSettingAll, getUserList } from "../apis";
-import { convertDate, USER_TABLE_HEADER } from "../utils/user";
 import { IAccount, ISettings, IUser } from "@/lib/models";
 import { Modal } from "@/components/common";
+import { getAccountAll, getSettingAll } from "@/lib/apis/account";
+import { getUserList } from "@/lib/apis/user";
+import { convertDate, USER_TABLE_HEADER } from "@/lib/utils";
+import { Loading } from "@/components/atom";
 
 const UserPage = () => {
   const navigate = useNavigate();
@@ -47,8 +49,9 @@ const UserPage = () => {
   };
 
   const handleSearchReset = () => {
-    if (!query) return;
-
+    if (!query) {
+      return;
+    }
     setPage(1);
     setIsSearch((prev) => !prev);
     setQuery("");
@@ -70,11 +73,16 @@ const UserPage = () => {
     return data && data.is_active ? "활성화" : "비활성화";
   };
 
+  if (status === "loading") {
+    return <Loading />;
+  }
+
+  if (status === "error") {
+    return <div>서버에 문제가 있는 것 같아요.</div>;
+  }
+
   return (
     <>
-      {status === "loading" && <span>Loading...</span>}
-      {status === "error" && <span>Error!</span>}
-
       <section className="flex h-[40px] items-center justify-between">
         <button onClick={() => setVisibleModal(true)}>사용자 생성</button>
         <Modal visible={visibleModal} onClose={() => setVisibleModal(false)}>

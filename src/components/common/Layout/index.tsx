@@ -1,4 +1,4 @@
-import { deleteFetchData } from "@/utils/localStorage";
+import { deleteFetchData } from "@/lib/utils/localStorage";
 import React from "react";
 import { Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Sidebar from "./Sidebar";

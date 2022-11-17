@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React, { CSSProperties, HTMLAttributes, useEffect, useMemo } from "react";
 import ReactDOM from "react-dom";
-import { useClickAway } from "@/hooks";
+import { useClickAway } from "@/lib/hooks";
 import classes from "./index.module.css";
 
 interface Props extends HTMLAttributes<HTMLElement> {
