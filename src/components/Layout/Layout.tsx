@@ -1,6 +1,6 @@
 import { deleteFetchData } from "../../utils/localStorage";
 import React from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar/Sidebar";
 import Header from "./Header/Header";
 import { useSearchParams } from "react-router-dom";
@@ -13,8 +13,9 @@ interface LayoutDefaultProps {
 const Layout = ({ children }: LayoutDefaultProps) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const location = useLocation();
   const current: string | null = searchParams.get("current");
-  const title: string | null = searchParams.get("target");
+  const title: string | null = location.pathname.includes("detail") ? "detail" : "";
 
   const navigateTo = (target: string): void => {
     navigate(`${target}`);

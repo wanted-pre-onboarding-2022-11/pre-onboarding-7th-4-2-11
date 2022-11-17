@@ -34,8 +34,8 @@ const MainPage = () => {
     navigate(`?current=account&page=${selectedItem.selected + 1}`);
   };
 
-  const handleDetail = (target: string): void => {
-    navigate(`/detail/${target}`, { state: { page } });
+  const handleDetail = (uuid: string): void => {
+    navigate(`/detail?target=${uuid}`, { state: { page } });
   };
 
   const { data, isLoading, isError } = useQuery<AccountProps>(
@@ -48,8 +48,6 @@ const MainPage = () => {
   }, [page]);
 
   if (isError) return <Navigate to={"/login"} replace />;
-
-  if (data && data.accountList.length === 0) return <Navigate to={"/error"} replace />;
 
   return (
     <div className="min-h-screen p-5">

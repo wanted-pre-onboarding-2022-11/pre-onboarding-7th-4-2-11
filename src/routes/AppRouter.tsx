@@ -29,7 +29,7 @@ const AppRouter = () => {
             }
           />
           <Route
-            path={`${ROUTE_PATH.DETAIL}/:id`}
+            path={`${ROUTE_PATH.DETAIL}`}
             element={
               <ProtectedRoute isTokenRequired={false} redirectPath={ROUTE_PATH.LOGIN}>
                 <DetailPage />
