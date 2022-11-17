@@ -25,16 +25,17 @@ instance.interceptors.response.use(
 );
 
 export const tryLogin = async (loginFormData: ILoginFormData): Promise<void> => {
-  const res = await instance.post("/api/login", loginFormData);
+  const res = await instance.post("https://api.oscar0421.com/login", loginFormData);
   saveFetchData(res.data.accessToken, res.data.user);
 };
 
-export const getAccountList = async (page: number): Promise<AccountProps> => {
-  const resUserList = await instance.get("/api/users");
-  const resAccountList = await instance.get(`/api/accounts?`, {
+export const getAccountList = async (page: number, search: string): Promise<AccountProps> => {
+  const resUserList = await instance.get("https://api.oscar0421.com/users");
+  const resAccountList = await instance.get(`https://api.oscar0421.com/accounts?`, {
     params: {
       _page: page,
       _limit: 20,
+      q: search,
     },
   });
 
@@ -53,8 +54,8 @@ export const getAccountList = async (page: number): Promise<AccountProps> => {
 };
 
 export const getAccountDetail = async (id: string): Promise<AccountList> => {
-  const resUserList = await instance.get("/api/users");
-  const resAccountDetail = await instance.get(`/api/accounts/${id}`);
+  const resUserList = await instance.get("https://api.oscar0421.com/users");
+  const resAccountDetail = await instance.get(`https://api.oscar0421.com/accounts/${id}`);
 
   const userList = resUserList.data;
   const accountList = [resAccountDetail.data];
@@ -68,9 +69,9 @@ export const getAccountDetail = async (id: string): Promise<AccountList> => {
 };
 
 export const patchAccountData = async (id: number, value: PatchAccountData) => {
-  await instance.patch(`/api/accounts/${id}`, value);
+  await instance.patch(`https://api.oscar0421.com/accounts/${id}`, value);
 };
 
 export const deleteAccountData = async (id: string) => {
-  await instance.delete(`/api/accounts/${id}`);
+  await instance.delete(`https://api.oscar0421.com/accounts/${id}`);
 };

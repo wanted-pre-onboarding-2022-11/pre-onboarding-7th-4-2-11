@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Navigate, useNavigate, useSearchParams, useLocation } from "react-router-dom";
 import styled from "styled-components";
@@ -10,13 +10,24 @@ import TablePagination from "../components/Table/TablePagination";
 
 const MainPage = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const page: number | null = Number(searchParams.get("page"));
+  const search: string | null = searchParams.get("search") || "";
   const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState<string>(search);
+
+  const handleSearchValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSearchSubmit = () => {
+    searchParams.set("search", searchQuery);
+    setSearchParams(searchParams);
+  };
 
   const handleGetAccountList = async () => {
     try {
-      const res = await getAccountList(page);
+      const res = await getAccountList(page, search);
 
       return res;
     } catch (error: unknown) {
@@ -32,7 +43,9 @@ const MainPage = () => {
   };
 
   const handlePageClick = (selectedItem: { selected: number }) => {
-    navigate(`?current=account&page=${selectedItem.selected + 1}`);
+    navigate(
+      `?current=account&page=${selectedItem.selected + 1}${search ? "&search=" + search : ""}`,
+    );
   };
 
   const handleDetail = (id: number): void => {
@@ -40,7 +53,7 @@ const MainPage = () => {
   };
 
   const { data, isLoading, isError, refetch } = useQuery<AccountProps>(
-    ["accountList", page],
+    ["accountList", { page, search }],
     handleGetAccountList,
   );
 
@@ -57,6 +70,8 @@ const MainPage = () => {
   return (
     <div className="min-h-screen p-5">
       <ContentContainer className="shadow-lg min-h-screen p-5 w-full ">
+        <input onChange={handleSearchValue} value={searchQuery} />
+        <button onClick={handleSearchSubmit}>검색</button>
         {data && !isLoading ? (
           <>
             <Table accountList={data.accountList} handleDetail={handleDetail} />
