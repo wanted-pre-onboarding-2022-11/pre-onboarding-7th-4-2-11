@@ -52,16 +52,12 @@ export const getAccountList = async (page: number): Promise<AccountProps> => {
   };
 };
 
-export const getAccountDetail = async (uuid: string): Promise<AccountList> => {
+export const getAccountDetail = async (id: string): Promise<AccountList> => {
   const resUserList = await instance.get("/api/users");
-  const resAccountDetail = await instance.get(`/api/accounts`, {
-    params: {
-      q: uuid,
-    },
-  });
+  const resAccountDetail = await instance.get(`/api/accounts/${id}`);
 
   const userList = resUserList.data;
-  const accountList = resAccountDetail.data;
+  const accountList = [resAccountDetail.data];
 
   const temp = accountList.map((e: AccountList) => {
     const userName = userList.filter((el: UserList) => el.id === e.user_id);
